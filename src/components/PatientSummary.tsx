@@ -10,7 +10,7 @@ interface PatientSummaryProps {
 }
 
 export function PatientSummary({ patientData, followUps }: PatientSummaryProps) {
-    const API_BASE = 'http://localhost:3001';
+    const API_BASE = '';
 
     return (
         <div className="space-y-6">
