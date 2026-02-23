@@ -129,7 +129,7 @@ function App() {
         alert('Error: ' + err.error);
       }
     } catch (error) {
-      alert('Failed to connect to server. Ensure backend is running.');
+      alert('Failed to connect to server. Error: ' + (error as Error).message);
     }
   };
 
