@@ -142,6 +142,24 @@ function App() {
     setActiveTab('patient');
   };
 
+  const handleDelete = async (id: string) => {
+    try {
+      const response = await fetch(`${API_BASE}/api/patients/${id}`, {
+        method: 'DELETE',
+      });
+
+      if (response.ok) {
+        // Remove from local state
+        setPatients(patients.filter(p => p.id !== id));
+      } else {
+        const err = await response.json();
+        alert('Error deleting patient: ' + err.error);
+      }
+    } catch (error) {
+      alert('Failed to connect to server. Error: ' + (error as Error).message);
+    }
+  };
+
   return (
     <div className="min-h-screen bg-slate-50 p-4 md:p-8 font-sans">
       <div className="max-w-4xl mx-auto space-y-6">
@@ -164,6 +182,7 @@ function App() {
               patients={patients}
               onSelect={fetchPatientDetails}
               onAddNew={() => setView('form')}
+              onDelete={handleDelete}
             />
           </div>
         )}

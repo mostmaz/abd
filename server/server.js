@@ -199,6 +199,30 @@ app.put('/api/patients/:id', upload.fields([
     }
 });
 
+// Delete Patient Record
+app.delete('/api/patients/:id', (req, res) => {
+    try {
+        const patientId = req.params.id;
+
+        // Note: SQLite foreign keys aren't enabled by default in better-sqlite3 
+        // without PRAGMA foreign_keys = ON, so it's safest to manually delete follow_ups first.
+        const deleteFollowUps = db.prepare('DELETE FROM follow_ups WHERE patient_id = ?');
+        deleteFollowUps.run(patientId);
+
+        const deletePatient = db.prepare('DELETE FROM patients WHERE id = ?');
+        const info = deletePatient.run(patientId);
+
+        if (info.changes === 0) {
+            return res.status(404).json({ error: 'Patient not found' });
+        }
+
+        res.json({ success: true, message: 'Patient deleted successfully' });
+    } catch (error) {
+        console.error('Error deleting patient:', error);
+        res.status(500).json({ error: error.message });
+    }
+});
+
 app.listen(PORT, () => {
     console.log(`Server running at http://localhost:${PORT}`);
 });
