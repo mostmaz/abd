@@ -6,7 +6,9 @@ import { PatientList } from './components/PatientList';
 import { Button } from './components/ui/Button';
 
 function App() {
-  const API_BASE = 'http://localhost:3001';
+  // Use empty string so requests go to the same origin (e.g. /api/patients)
+  // Nginx will catch these and proxy them to the backend Port 3001
+  const API_BASE = '';
 
   const [view, setView] = useState<'list' | 'form' | 'detail'>('list');
   const [patients, setPatients] = useState<any[]>([]);
