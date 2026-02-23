@@ -66,8 +66,8 @@ app.post('/api/patients', upload.fields([
 
         // Insert Follow-ups
         const insertFollowUp = db.prepare(`
-      INSERT INTO follow_ups (patient_id, type, painScore, rom, loda, hhsScore, xray_path, mri_path)
-      VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+      INSERT INTO follow_ups (patient_id, type, painScore, rom, loda, hhsScore, hhs_details, xray_path, mri_path)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
     `);
 
         Object.entries(followUps).forEach(([type, data]) => {
